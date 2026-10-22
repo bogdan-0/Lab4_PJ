@@ -1,0 +1,317 @@
+public class Main
+{
+    private static final List<Echipamente>echipamente=new ArrayList<>();
+    private static final Scanner sc=new Scanner(System.in);
+    public static void main(String[]args)
+    {
+        citireFisier("electronice.txt");
+        int optiune;
+        do{
+            System.out.println("1. Afişarea tuturor echipamentelor");
+            System.out.println("2. Afişarea imprimantelor");
+            System.out.println("3. Afişarea copiatoarelor");
+            System.out.println("4. Afişarea sistemelor de calcul");
+            System.out.println("5. Modificarea stării în care se află un echipament");
+            System.out.println("6. Setarea unui anumit mod de scriere pentru o imprimantă");
+            System.out.println("7. Setarea unui format de copiere pentru copiatoare");
+            System.out.println("8. Instalarea unui anumit sistem de operare pe un sistem de calcul");
+            System.out.println("9. Afişarea echipamentelor vândute");
+            System.out.println("10. Serealizare");
+            System.out.println("11. Deserealizare");
+            System.out.println("0. Iesire");
+
+            optiune=citesteInt();
+            switch(optiune)
+            {
+                case 1:
+                    afisareToate();
+                    break;
+                case 2:
+                    afisareTip(Imprimanta.class);
+                    break;
+                case 3 :
+                    afisareTip(Copiator.class);
+                    break;
+                case 4:
+                    afisareTip(SistemCalcul.class);
+                    break;
+                case 5:
+                    modificareStare();
+                    break;
+                case 6:
+                    modificareTiparire();
+                    break;
+                case 7:
+                    modificareFormat();
+                    break;
+                case 8:
+                    instalareSistemOperare();
+                    break;
+                case 9:
+                    afisareVandute();
+                    break;
+                case 10:
+                    serealizare("echip.bin");
+                    break;
+                case 11:
+                    deserealizare("echip.bin");
+                    break;
+                case 0 :
+                    break;
+            }
+            while (optiune!=0);
+        }
+    }
+}
+
+
+public class Imprimanta extends Echipamente
+{
+    private int ppm;
+    private int rezolutie;
+    private int p_car;
+    private ModTiparire mod;
+
+    public Imprimanta(int ppm, int rezolutie, int p_car, ModTiparire mod) {
+        this.ppm = ppm;
+        this.rezolutie = rezolutie;
+        this.p_car = p_car;
+        this.mod = mod;
+    }
+
+    public int getPpm() {
+        return ppm;
+    }
+
+    public void setPpm(int ppm) {
+        this.ppm = ppm;
+    }
+
+    public int getRezolutie() {
+        return rezolutie;
+    }
+
+    public void setRezolutie(int rezolutie) {
+        this.rezolutie = rezolutie;
+    }
+
+    public int getP_car() {
+        return p_car;
+    }
+
+    public void setP_car(int p_car) {
+        this.p_car = p_car;
+    }
+
+    public ModTiparire getMod() {
+        return mod;
+    }
+
+    public void setMod(ModTiparire mod) {
+        this.mod = mod;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Imprimanta{" +
+                "ppm=" + ppm +
+                ", rezolutie=" + rezolutie +
+                ", p_car=" + p_car +
+                ", mod=" + mod +
+                '}';
+    }
+}
+
+public enum FormatCopiere
+{   A3,
+    A4
+}
+
+
+public abstract class Echipamente
+{
+    protected String denumire;
+    protected int nr_inv;
+    protected double pret;
+    protected String zona_magazin;
+    protected Stare stare;
+
+    public Echipamente(String denumire, int nr_inv, double pret, String zona_magazin, Stare stare) {
+        this.denumire = denumire;
+        this.nr_inv = nr_inv;
+        this.pret = pret;
+        this.zona_magazin = zona_magazin;
+        this.stare = stare;
+    }
+
+    public String getDenumire() {
+        return denumire;
+    }
+
+    public void setDenumire(String denumire) {
+        this.denumire = denumire;
+    }
+
+    public int getNr_inv() {
+        return nr_inv;
+    }
+
+    public void setNr_inv(int nr_inv) {
+        this.nr_inv = nr_inv;
+    }
+
+    public double getPret() {
+        return pret;
+    }
+
+    public void setPret(double pret) {
+        this.pret = pret;
+    }
+
+    public String getZona_magazin() {
+        return zona_magazin;
+    }
+
+    public void setZona_magazin(String zona_magazin) {
+        this.zona_magazin = zona_magazin;
+    }
+
+    public Stare getStare() {
+        return stare;
+    }
+
+    public void setStare(Stare stare) {
+        this.stare = stare;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Echipamente{" +
+                "denumire='" + denumire + '\'' +
+                ", nr_inv=" + nr_inv +
+                ", pret=" + pret +
+                ", zona_magazin='" + zona_magazin + '\'' +
+                ", stare=" + stare +
+                '}';
+    }
+}
+
+public class Copiator extends Echipamente
+{
+    private int p_ton;
+    private FormatCopiere format;
+
+    public Copiator(int p_ton, FormatCopiere format) {
+        this.p_ton = p_ton;
+        this.format = format;
+    }
+
+    public FormatCopiere getFormat() {
+        return format;
+    }
+
+    public void setFormat(FormatCopiere format) {
+        this.format = format;
+    }
+
+
+    public int getP_ton() {
+        return p_ton;
+    }
+
+    public void setP_ton(int p_ton) {
+        this.p_ton = p_ton;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Copiator{" +
+                "p_ton=" + p_ton +
+                ", format=" + format +
+                '}';
+    }
+}
+
+public enum TipMonitor
+{
+    LCD,
+    LED,
+    OLED
+}
+
+public enum Stare
+{   ACHIZITIONAT,
+    EXPUS,
+    VANDUT
+}
+
+public enum SistemOperare
+{
+    WINDOWS,
+    LINUX
+}
+
+public class SistemCalcul extends Echipamente
+{
+    private TipMonitor tip_mon;
+    private double vit_proc;
+    private int c_hdd;
+    private SistemOperare sistem_operare;
+
+
+    public SistemCalcul(TipMonitor tip_mon, double vit_proc, int c_hdd, SistemOperare sistem_operare) {
+        this.tip_mon = tip_mon;
+        this.vit_proc = vit_proc;
+        this.c_hdd = c_hdd;
+        this.sistem_operare = sistem_operare;
+    }
+
+    public TipMonitor getTip_mon() {
+        return tip_mon;
+    }
+
+    public void setTip_mon(TipMonitor tip_mon) {
+        this.tip_mon = tip_mon;
+    }
+
+    public double getVit_proc() {
+        return vit_proc;
+    }
+
+    public void setVit_proc(double vit_proc) {
+        this.vit_proc = vit_proc;
+    }
+
+    public int getC_hdd() {
+        return c_hdd;
+    }
+
+    public void setC_hdd(int c_hdd) {
+        this.c_hdd = c_hdd;
+    }
+
+    public SistemOperare getSistem_operare() {
+        return sistem_operare;
+    }
+
+    public void setSistem_operare(SistemOperare sistem_operare) {
+        this.sistem_operare = sistem_operare;
+    }
+
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "SistemCalcul{" +
+                "tip_mon=" + tip_mon +
+                ", vit_proc=" + vit_proc +
+                ", c_hdd=" + c_hdd +
+                ", sistem_operare=" + sistem_operare +
+                '}';
+    }
+}
+
+public enum ModTiparire
+{
+    COLOR,
+    ALB_NEGRU
+}
